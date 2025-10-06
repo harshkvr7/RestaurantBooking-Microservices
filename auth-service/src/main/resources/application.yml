@@ -1,0 +1,30 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: auth-service
+
+  kafka:
+    producer:
+      bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.info.headers: true
+        spring.json.type.mapping: verificationEvent:com.rms.auth_service.dto.VerificationEmailRequestDto
+        auto.include.jmx.reporter: false
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION:36000000}
+
+service:
+  urls:
+    api-gateway:  ${API_GATEWAY_URL:http://localhost:8080}
+    auth-service: ${AUTH_SERVICE_URL:http://localhost:8081}
+    user-service: ${USER_SERVICE_URL:http://localhost:8082}
+    restaurant-service: ${RESTAURANT_SERVICE_URL:http://localhost:8083}
+    media-service: ${MEDIA_SERVICE_URL:http://localhost:8084}
+    reservation-service: ${RESERVATION_SERVICE_URL:http://localhost:8085}
+    menu-item-service: ${MENU_ITEM_SERVICE_URL:http://localhost:8087}

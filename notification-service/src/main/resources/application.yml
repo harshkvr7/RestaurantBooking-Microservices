@@ -1,0 +1,40 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: notification-service
+
+  kafka:
+    consumer:
+      bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+        spring.json.use.type.headers: true
+        spring.json.type.mapping: verificationEvent:com.rms.notification_service.dto.VerificationEmailRequestDto,reservationRequestEvent:com.rms.notification_service.dto.ReservationRequestEventDto,reservationStatusUpdateEvent:com.rms.notification_service.dto.ReservationStatusUpdateEventDto
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+service:
+  urls:
+    api-gateway:  ${API_GATEWAY_URL:http://localhost:8080}
+    auth-service: ${AUTH_SERVICE_URL:http://localhost:8081}
+    user-service: ${USER_SERVICE_URL:http://localhost:8082}
+    restaurant-service: ${RESTAURANT_SERVICE_URL:http://localhost:8083}
+    media-service: ${MEDIA_SERVICE_URL:http://localhost:8084}
+    reservation-service: ${RESERVATION_SERVICE_URL:http://localhost:8085}
+    menu-item-service: ${MENU_ITEM_SERVICE_URL:http://localhost:8087}

@@ -1,0 +1,37 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: analytics-service
+  datasource:
+    url: ${ANALYTICS_DB_URL:jdbc:postgresql://localhost:5437/analytics_db}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  kafka:
+      consumer:
+        bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+        group-id: analytics-group
+        auto-offset-reset: earliest
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+        properties:
+          spring.json.trusted.packages: '*'
+          spring.json.use.type.headers: true
+          spring.json.type.mapping: restaurantViewedEvent:com.rms.analytics_service.dto.RestaurantViewedEvent,reviewAddedEvent:com.rms.analytics_service.dto.ReviewAddedEvent,ratingAddedEvent:com.rms.analytics_service.dto.RatingAddedEvent,reservationRequestCreatedEvent:com.rms.analytics_service.dto.ReservationRequestCreatedEvent
+
+              
+service:
+  urls:
+    api-gateway:  ${API_GATEWAY_URL:http://localhost:8080}
+    auth-service: ${AUTH_SERVICE_URL:http://localhost:8081}
+    user-service: ${USER_SERVICE_URL:http://localhost:8082}
+    restaurant-service: ${RESTAURANT_SERVICE_URL:http://localhost:8083}
+    media-service: ${MEDIA_SERVICE_URL:http://localhost:8084}
+    reservation-service: ${RESERVATION_SERVICE_URL:http://localhost:8085}
+    menu-item-service: ${MENU_ITEM_SERVICE_URL:http://localhost:8087}
+

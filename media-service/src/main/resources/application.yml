@@ -1,0 +1,23 @@
+spring:
+    application:
+        name: media-service
+
+server:
+  port: 8084
+
+minio:
+  endpoint: ${MINIO_URL:http://localhost:9000}
+  access-key: ${MINIO_ACCESS_KEY}
+  secret-key: ${MINIO_SECRET_KEY}
+  bucket-name: rms-bucket
+  public-url: ${MINIO_PUBLIC_URL:http://localhost:9000}
+
+service:
+  urls:
+    api-gateway:  ${API_GATEWAY_URL:http://localhost:8080}
+    auth-service: ${AUTH_SERVICE_URL:http://localhost:8081}
+    user-service: ${USER_SERVICE_URL:http://localhost:8082}
+    restaurant-service: ${RESTAURANT_SERVICE_URL:http://localhost:8083}
+    media-service: ${MEDIA_SERVICE_URL:http://localhost:8084}
+    reservation-service: ${RESERVATION_SERVICE_URL:http://localhost:8085}
+    menu-item-service: ${MENU_ITEM_SERVICE_URL:http://localhost:8087}

@@ -1,0 +1,15 @@
+# Use an official OpenJDK 17 slim image as the base
+FROM openjdk:17-jdk-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the compiled JAR file (the result of 'mvn clean install') into the container
+# The wildcard '*.jar' handles different version numbers in the filename
+COPY target/*.jar app.jar
+
+# Expose the port the application will run on (this will be set in application.yml)
+EXPOSE 8080
+
+# The command to run the application when the container starts
+ENTRYPOINT ["java","-jar","app.jar"]

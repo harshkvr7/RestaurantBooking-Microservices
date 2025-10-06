@@ -1,0 +1,42 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: menu-item-service
+  datasource:
+    url: ${MENU_ITEM_DB_URL:jdbc:postgresql://localhost:5435/menu_items_db}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  kafka:
+    producer:
+      bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            add:
+              type:
+                info:
+                  headers: true
+            type:
+              mapping: menuItemEvent:com.rms.menu_item_service.dto.MenuItemEvent
+  data:
+    redis:
+      host: ${MENU_ITEM_CACHE_HOST:localhost}
+      port: ${MENU_ITEM_CACHE_PORT:6382}
+
+service:
+  urls:
+    api-gateway:  ${API_GATEWAY_URL:http://localhost:8080}
+    auth-service: ${AUTH_SERVICE_URL:http://localhost:8081}
+    user-service: ${USER_SERVICE_URL:http://localhost:8082}
+    restaurant-service: ${RESTAURANT_SERVICE_URL:http://localhost:8083}
+    media-service: ${MEDIA_SERVICE_URL:http://localhost:8084}
+    reservation-service: ${RESERVATION_SERVICE_URL:http://localhost:8085}
+    menu-item-service: ${MENU_ITEM_SERVICE_URL:http://localhost:8087}
