@@ -28,8 +28,8 @@ export RESTAURANTS_DB_URL="jdbc:postgresql://localhost:5433/restaurants_db"
 export USERS_DB_URL="jdbc:postgresql://localhost:5432/users_db"
 export ANALYTICS_DB_URL="jdbc:postgresql://localhost:5437/analytics_db"
 
-export EMAIL_USERNAME="restaurantmanager189@gmail.com"
-export EMAIL_PASSWORD="gwst zwfw rcce cvkx"
+export EMAIL_USERNAME=""
+export EMAIL_PASSWORD=""
 
 export LOCATION_REDIS_HOST="localhost"
 export LOCATION_REDIS_PORT="6379"
